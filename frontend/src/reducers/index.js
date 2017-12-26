@@ -16,7 +16,6 @@ const initialAppState = {
 
 
 function app(state = initialAppState, action) {
-  console.log('action', action.type);
   switch (action.type) {
     case GET_CATEGORIES:
       return {

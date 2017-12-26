@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Route } from  'react-router-dom';
 import {connect} from 'react-redux';
 import 'react-table/react-table.css'
 import { getPost } from './actions/post_actions';

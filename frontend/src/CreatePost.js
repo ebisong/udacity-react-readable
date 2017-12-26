@@ -50,7 +50,6 @@ import { connect } from 'react-redux';
   };
 
   render() {
-    console.log('props', this.props);
     const actions = [
       <FlatButton
         label="Cancel"

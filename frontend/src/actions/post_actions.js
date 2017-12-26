@@ -19,9 +19,7 @@ export const receivePost = (post) => {
 
 export const getPosts = (category) => {
   return (dispatch) => {
-    console.log(category);
     if (category) {
-      console.log('in here');
       fetchPostsByCategory(category)
         .then((data) => {
           return dispatch(receivePosts(data));
@@ -29,7 +27,6 @@ export const getPosts = (category) => {
     } else {
       fetchPosts()
         .then((data) => {
-          console.log(data);
           return dispatch(receivePosts(data));
         });
     }
@@ -68,7 +65,6 @@ export const getPost = (id) => {
   return (dispatch) => {
     fetchPost(id)
       .then((post) => {
-        console.log(post);
         fetchCommentsByPost(id)
           .then((comments) => {
             post.comments = comments;
@@ -98,7 +94,6 @@ export const rateComment = (postId, commentId, data) => {
   return (dispatch) => {
     voteComment(commentId, data)
       .then((res) => {
-        console.log(res);
         fetchPost(postId)
           .then((post) => {
             fetchCommentsByPost(postId)
@@ -140,13 +135,9 @@ export const updateComment = (postId, commentId, data) => {
 };
 
 export const createComment = (data) => {
-  console.log('we mad it in comments', data);
   return (dispatch) => {
-    console.log('made it here');
     addComment(data)
       .then((results) => {
-        console.log('here');
-        console.log('results', results);
         fetchPost(data.parentId)
           .then((post) => {
             fetchCommentsByPost(data.parentId)

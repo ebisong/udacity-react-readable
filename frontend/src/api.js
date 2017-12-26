@@ -63,7 +63,6 @@ export const addPost = async (data) => {
 };
 
 export const addComment = async (data) => {
-  console.log('inside about to request', data);
   const request = {
     method: 'post',
     url: 'http://localhost:3001/comments',

@@ -68,8 +68,6 @@ function add (token, comment) {
       deleted: false,
       parentDeleted: false
     }
-
-    console.log('we out here');
     posts.incrementCommentCounter(token, comment.parentId, 1)
     res(comments[comment.id])
   })

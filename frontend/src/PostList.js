@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { getPosts } from './actions/post_actions';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-import {Link} from 'react-router-dom';
 import VoteButton from './VoteButton';
 
 class PostList extends Component {
