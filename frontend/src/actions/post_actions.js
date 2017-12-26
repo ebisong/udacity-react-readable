@@ -106,14 +106,21 @@ export const rateComment = (postId, commentId, data) => {
   }
 };
 
-export const ratePost = (postId, data) => {
+export const ratePost = (postId, data, category) => {
   return (dispatch) => {
     votePost(postId, data)
       .then(() => {
-        fetchPosts(postId)
-          .then((post) => {
-            return dispatch(receivePosts(post));
-          });
+        if (category) {
+          fetchPostsByCategory(category)
+            .then((data) => {
+              return dispatch(receivePosts(data));
+            });
+        } else {
+          fetchPosts(postId)
+            .then((post) => {
+              return dispatch(receivePosts(post));
+            });
+        }
       });
   }
 };

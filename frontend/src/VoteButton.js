@@ -15,7 +15,7 @@ class App extends Component {
   }
   handleClick = () => {
     if (this.props.itemType === 'post') {
-      this.props.dispatch(ratePost(this.props.postId, { option: this.props.voteType }));
+      this.props.dispatch(ratePost(this.props.postId, { option: this.props.voteType }, this.props.category));
     } else {
       this.props.dispatch(rateComment(this.props.postId, this.props.commentId, { option: this.props.voteType }));
     }

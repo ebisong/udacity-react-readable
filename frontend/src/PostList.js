@@ -54,14 +54,14 @@ class PostList extends Component {
         Header: 'Up Vote',
         id: 'upVote',
         Cell: row => {
-          return <VoteButton postId={row.original.id} itemType="post" voteType="upVote" />
+          return <VoteButton postId={row.original.id} itemType="post" voteType="upVote" category={this.props.match.params.category} />
         }
       },
       {
         Header: 'Down Vote',
         id: 'downVote',
         Cell: row => {
-          return <VoteButton postId={row.original.id} itemType="post" voteType="downVote" />
+          return <VoteButton postId={row.original.id} itemType="post" voteType="downVote" category={this.props.match.params.category} />
         }
       }
     ];
