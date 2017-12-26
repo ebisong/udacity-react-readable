@@ -66,7 +66,7 @@ import { connect } from 'react-redux';
 
     return (
       <div>
-        <RaisedButton label="Dialog" onClick={this.handleOpen} />
+        <RaisedButton label="Create Post" onClick={this.handleOpen} />
         <Dialog
           title="Create Post"
           actions={actions}
