@@ -9,29 +9,33 @@ import CreateComment from './CreateComment';
 import DeleteComment from './DeleteComment';
 import UpdateComment from './UpdateComment';
 import VoteButton from './VoteButton';
+import NotFound from './NotFound';
 
 class App extends Component {
   componentDidMount() {
     this.props.dispatch(getPost(this.props.match.params.id));
   }
   render() {
-    return (
-      <div className="post-detail">
-        <DeletePost history={this.props.history}/>
-        <UpdatePost listPost={this.props.post}/>
-        <CreateComment parentId={this.props.post.id}/>
-        <h5>Timestamp: {moment(this.props.post.timestamp).toString()} </h5>
-        <h5>Title: {this.props.post.title} </h5>
-        <h5>Body: {this.props.post.body} </h5>
-        <h5>Author: {this.props.post.author}</h5>
-        <h5>Category: {this.props.post.category}</h5>
-        <h5>Vote Score: {this.props.post.voteScore}</h5>
-        <h5>Comment Count: {this.props.post.commentCount}</h5>
-        <VoteButton postId={this.props.post.id} itemType="post" voteType="upVote" postDetail={true}/>
-        <VoteButton postId={this.props.post.id} itemType="post" voteType="downVote" postDetail={true}/>
-        <h5>Comments:</h5>
-        <table>
-          <thead>
+    if (!this.props.post.id) {
+        return <NotFound/>
+    } else {
+      return (
+        <div className="post-detail">
+          <DeletePost history={this.props.history}/>
+          <UpdatePost listPost={this.props.post}/>
+          <CreateComment parentId={this.props.post.id}/>
+          <h5>Timestamp: {moment(this.props.post.timestamp).toString()} </h5>
+          <h5>Title: {this.props.post.title} </h5>
+          <h5>Body: {this.props.post.body} </h5>
+          <h5>Author: {this.props.post.author}</h5>
+          <h5>Category: {this.props.post.category}</h5>
+          <h5>Vote Score: {this.props.post.voteScore}</h5>
+          <h5>Comment Count: {this.props.post.commentCount}</h5>
+          <VoteButton postId={this.props.post.id} itemType="post" voteType="upVote" postDetail={true}/>
+          <VoteButton postId={this.props.post.id} itemType="post" voteType="downVote" postDetail={true}/>
+          <h5>Comments:</h5>
+          <table>
+            <thead>
             <tr>
               <td> Timestamp </td>
               <td> Body </td>
@@ -39,8 +43,8 @@ class App extends Component {
               <td> VoteScore </td>
               <td> Delete </td>
             </tr>
-          </thead>
-          <tbody>
+            </thead>
+            <tbody>
             { this.props.post.comments.map((comment) => {
               return (<tr key={comment.id}>
                 <td>{moment(comment.timestamp).toString()}</td>
@@ -53,12 +57,13 @@ class App extends Component {
                 <td><VoteButton postId={this.props.post.id} commentId={comment.id} itemType="comment" voteType="downVote"/></td>
               </tr>)
             })}
-          </tbody>
-        </table>
-      </div>
-    );
-  }
+            </tbody>
+          </table>
+        </div>)
+    }
+  };
 }
+
 
 const mapStateToProps = (state, ownProps) => {
   return {
