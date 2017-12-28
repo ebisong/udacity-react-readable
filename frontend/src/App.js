@@ -10,7 +10,7 @@ class App extends Component {
       <div className="App">
         <Route exact path="/" component={Main}/>
         <Route path="/posts/:category" render={ (props) => <PostList {...props} />}/>
-        <Route path="/post-detail/:id" render={ (props) => <PostDetail {...props} />}/>
+        <Route path="/:category/:id" render={ (props) => <PostDetail {...props} />}/>
       </div>
     );
   }

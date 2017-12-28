@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getPosts } from './actions/post_actions';
+import { getPosts, getPost } from './actions/post_actions';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import VoteButton from './VoteButton';
+import DeletePost from './DeletePost';
+import UpdatePost from './UpdatePost';
 
 class PostList extends Component {
   componentDidMount() {
@@ -13,8 +15,10 @@ class PostList extends Component {
   handleTdProps = (state, rowInfo, column, instance) => {
     return {
       onClick: (event, handleOriginal) => {
-        if (!(column.id === 'upVote' || column.id === 'downVote')) {
-          this.props.history.push(`/post-detail/${rowInfo.original.id}`)
+        if (!(column.id === 'upVote' || column.id === 'downVote' || column.id === 'delete' || column.id === 'update')) {
+          this.props.history.push(`/${rowInfo.original.category}/${rowInfo.original.id}`)
+        } else {
+          this.props.dispatch(getPost(rowInfo.original.id));
         }
       }
     }
@@ -63,6 +67,20 @@ class PostList extends Component {
         Cell: row => {
           return <VoteButton postId={row.original.id} itemType="post" voteType="downVote" category={this.props.match.params.category} />
         }
+      },
+      {
+        Header: 'Delete',
+        id: 'delete',
+        Cell: row => {
+          return <DeletePost history={this.props.history} postId={row.original.id}/>
+        }
+      },
+      {
+        Header: 'Update',
+        id: 'update',
+        Cell: row => {
+          return <UpdatePost listPost={row.original} history={this.props.history}/>
+        }
       }
     ];
 
@@ -80,9 +98,9 @@ class PostList extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
+  console.log('ownProps', ownProps);
   return {
-    ...state,
-    ...ownProps
+    ...state
   };
 }
 

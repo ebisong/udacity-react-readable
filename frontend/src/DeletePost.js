@@ -9,7 +9,8 @@ const style = {
 
 class DeletePost extends Component {
   handleClick = () => {
-    this.props.dispatch(removePost(this.props.post.id));
+    const id = this.props.postId ? this.props.postId : this.props.post.id;
+    this.props.dispatch(removePost(id));
     this.props.history.push('/');
   };
 

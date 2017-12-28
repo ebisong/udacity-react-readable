@@ -18,7 +18,7 @@ class App extends Component {
     return (
       <div className="post-detail">
         <DeletePost history={this.props.history}/>
-        <UpdatePost/>
+        <UpdatePost listPost={this.props.post}/>
         <CreateComment parentId={this.props.post.id}/>
         <h5>Timestamp: {moment(this.props.post.timestamp).toString()} </h5>
         <h5>Title: {this.props.post.title} </h5>
@@ -27,6 +27,8 @@ class App extends Component {
         <h5>Category: {this.props.post.category}</h5>
         <h5>Vote Score: {this.props.post.voteScore}</h5>
         <h5>Comment Count: {this.props.post.commentCount}</h5>
+        <VoteButton postId={this.props.post.id} itemType="post" voteType="upVote" postDetail={true}/>
+        <VoteButton postId={this.props.post.id} itemType="post" voteType="downVote" postDetail={true}/>
         <h5>Comments:</h5>
         <table>
           <thead>

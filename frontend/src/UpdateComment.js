@@ -15,7 +15,6 @@ import { connect } from 'react-redux';
 class DialogExampleSimple extends React.Component {
   state = {
     open: false,
-    timestamp: this.props.timestamp,
     body: this.props.body,
   };
   handleOpen = () => {
@@ -52,7 +51,7 @@ class DialogExampleSimple extends React.Component {
 
     return (
       <div>
-        <RaisedButton label="Update Post" onClick={this.handleOpen} />
+        <RaisedButton label="Update Comment" onClick={this.handleOpen} />
         <Dialog
           title="Update Comment"
           actions={actions}
@@ -60,12 +59,6 @@ class DialogExampleSimple extends React.Component {
           open={this.state.open}
           onRequestClose={this.handleClose}
         >
-          <TextField
-            hintText="Timestamp"
-            name="timestamp"
-            value={this.state.timestamp}
-            onChange={this.handleChange}
-          /><br />
           <TextField
             hintText="Body"
             name="body"

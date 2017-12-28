@@ -3,7 +3,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import { updatePost } from './actions/post_actions';
+import { updatePost, getPosts } from './actions/post_actions';
 
 import { connect } from 'react-redux';
 /**
@@ -15,11 +15,9 @@ import { connect } from 'react-redux';
 class DialogExampleSimple extends React.Component {
   state = {
     open: false,
-    timestamp: this.props.post.timestamp,
-    title: this.props.post.title,
-    body: this.props.post.body,
-    author: this.props.post.author,
-    category: this.props.post.category
+    timestamp: this.props.listPost.timestamp,
+    title: this.props.listPost.title,
+    body: this.props.listPost.body
   };
   handleOpen = () => {
     this.setState({open: true});
@@ -30,14 +28,17 @@ class DialogExampleSimple extends React.Component {
   };
 
   submit = () => {
+    this.props.dispatch(updatePost(this.props.post.id, { title: this.state.title, body: this.state.body }));
+    this.props.dispatch(getPosts());
     this.setState({open: false});
   };
 
   handleChange = (event) => {
-    this.props.dispatch(updatePost(this.props.post.id, { [event.target.name]: event.target.value }));
+    this.setState({ [event.target.name]: event.target.value });
   };
 
   render() {
+    console.log(this.state);
     const actions = [
       <FlatButton
         label="Cancel"
@@ -62,28 +63,18 @@ class DialogExampleSimple extends React.Component {
           open={this.state.open}
           onRequestClose={this.handleClose}
         >
+          Title:
           <TextField
             hintText="Title"
             name="title"
-            value={this.props.post.title}
+            value={this.state.title}
             onChange={this.handleChange}
           /><br />
+          Body:
           <TextField
             hintText="Body"
             name="body"
-            value={this.props.post.body}
-            onChange={this.handleChange}
-          /><br />
-          <TextField
-            hintText="Author"
-            name="author"
-            value={this.props.post.author}
-            onChange={this.handleChange}
-          /><br />
-          <TextField
-            hintText="Category"
-            name="category"
-            value={this.props.post.category}
+            value={this.state.body}
             onChange={this.handleChange}
           /><br />
         </Dialog>
@@ -91,8 +82,11 @@ class DialogExampleSimple extends React.Component {
     );
   }
 }
-function mapStateToProps(state) {
-  return state;
+function mapStateToProps(state, ownProps) {
+  return {
+    ...state,
+    ...ownProps
+  };
 }
 export default connect(mapStateToProps)(DialogExampleSimple);
 

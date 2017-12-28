@@ -76,6 +76,7 @@ export const getPost = (id) => {
 
 export const updatePost = (id, data) => {
   return (dispatch) => {
+    console.log(id, data);
     modifyPost(id, data)
       .then(() => {
         fetchPost(id)
@@ -106,7 +107,7 @@ export const rateComment = (postId, commentId, data) => {
   }
 };
 
-export const ratePost = (postId, data, category) => {
+export const ratePost = (postId, data, category, postDetail) => {
   return (dispatch) => {
     votePost(postId, data)
       .then(() => {
@@ -116,10 +117,21 @@ export const ratePost = (postId, data, category) => {
               return dispatch(receivePosts(data));
             });
         } else {
-          fetchPosts(postId)
-            .then((post) => {
-              return dispatch(receivePosts(post));
-            });
+          if (postDetail) {
+            fetchPost(postId)
+              .then((post) => {
+                fetchCommentsByPost(postId)
+                  .then((comments) => {
+                    post.comments = comments;
+                    return dispatch(receivePost(post));
+                  });
+              });
+          } else {
+            fetchPosts(postId)
+              .then((post) => {
+                return dispatch(receivePosts(post));
+              });
+          }
         }
       });
   }

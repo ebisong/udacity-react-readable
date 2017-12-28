@@ -7,6 +7,9 @@ import randomString from 'randomstring';
 import { getPosts } from './actions/post_actions';
 import { addPost } from './api';
 import { connect } from 'react-redux';
+import DropDownMenu from 'material-ui/DropDownMenu';
+import MenuItem from 'material-ui/MenuItem';
+
 /**
  * Dialog with action buttons. The actions are passed in as an array of React objects,
  * in this example [FlatButtons](/#/components/flat-button).
@@ -19,8 +22,20 @@ import { connect } from 'react-redux';
     title: '',
     body: '',
     author: '',
-    category: ''
+    category: 'react'
   };
+
+  categories = [
+    {
+      name: 'react',
+    },
+    {
+      name: 'redux',
+    },
+    {
+      name: 'udacity',
+    }
+  ];
 
   handleOpen = () => {
     this.setState({open: true});
@@ -30,8 +45,12 @@ import { connect } from 'react-redux';
     this.setState({open: false});
   };
 
-  handleChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value })
+  handleChange = (event, index, value) => {
+    if (value) {
+      this.setState({ category: value });
+    } else {
+      this.setState({ [event.target.name]: event.target.value })
+    }
   };
 
   submit = () => {
@@ -72,8 +91,8 @@ import { connect } from 'react-redux';
           actions={actions}
           modal={false}
           open={this.state.open}
-          onRequestClose={this.handleClose}
-        >
+          onRequestClose={this.handleClose}>
+
           <TextField
             hintText="Title"
             name="title"
@@ -92,12 +111,12 @@ import { connect } from 'react-redux';
             value={this.state.author}
             onChange={this.handleChange}
           /><br />
-          <TextField
-            hintText="Category"
-            name="category"
-            value={this.state.category}
-            onChange={this.handleChange}
-          /><br />
+
+          <DropDownMenu value={this.state.category} onChange={this.handleChange}>
+            {this.categories.map((category) =>
+              (<MenuItem value={category.name}  primaryText={category.name} />))
+            }
+          </DropDownMenu><br />
         </Dialog>
       </div>
     );
